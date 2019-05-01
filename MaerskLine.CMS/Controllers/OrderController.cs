@@ -65,8 +65,9 @@ namespace MaerskLine.CMS.Controllers
                 }
                 catch (Exception ex)
                 {
+                    return View(model);
                 }
-                return View(model);
+                return RedirectToAction("Index","Home");
             }
         }
 
