@@ -1,0 +1,70 @@
+﻿@using MaerskLine.CMS.Models
+@model ShippingInfoViewModel
+
+@{
+    ViewBag.Title = "View";
+}
+
+<div class="container">
+    <h3>Order Tracking ID: @Model.OrderTrackingId</h3>
+    <div class="row">
+        <div class="form-card">
+            <div class='form-group'>
+                <div class='col-xs-12 form-group'>
+                    @Html.LabelFor(m => m.FromAddress, new { @class = "control-label locked" })
+                    @Html.TextBoxFor(m => m.FromAddress, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class='form-group'>
+                <div class='col-xs-12 form-group'>
+                    @Html.LabelFor(m => m.ToAddress, new { @class = "control-label locked" })
+                    @Html.TextBoxFor(m => m.ToAddress, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-group locked">
+                <div class='col-xs-12 form-group'>
+                    @Html.LabelFor(m => m.ItemName, new { @class = "control-label locked" })
+                    @Html.TextBoxFor(m => m.ItemName, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-group locked">
+                <div class='col-xs-12 form-group'>
+                    @Html.LabelFor(m => m.ItemWeight, new { @class = "control-label locked" })
+                    @Html.TextBoxFor(m => m.ItemWeight, new { @class = "form-control", type = "number" })
+                </div>
+            </div>
+            <div class="form-group locked">
+                <div class='col-xs-12 form-group'>
+                    @Html.LabelFor(m => m.ItemCategoryId, new { @class = "control-label locked" })
+                    @Html.DropDownListFor(m => m.ItemCategoryId, Model.ItemCategories.Select(x => new SelectListItem { Text = x.Name, Value = x.Id.ToString() }).ToList(), "Please select", new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-group locked">
+                <div class='col-xs-12 form-group'>
+                    @Html.LabelFor(m => m.PickupDate, new { @class = "control-label locked" })
+                    @Html.TextBoxFor(m => m.PickupDate, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-group locked">
+                <div class='col-xs-12 form-group'>
+                    @Html.LabelFor(m => m.Status, new { @class = "control-label locked" })
+                    @Html.TextBoxFor(m => m.Status, new { @class = "form-control" })
+                </div>
+            </div>
+
+            @if (User.IsInRole("DPort") || User.IsInRole("APort"))
+            {
+                using (Html.BeginForm("UpdateStatus", "Order", FormMethod.Post))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.HiddenFor(m => m.OrderId)
+                    <div class="form-group locked">
+                        <div class='col-xs-12 form-group'>
+                            <button class="btn btn-primary" type="submit">Update Status</button>
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+    </div>
+</div>

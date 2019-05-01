@@ -1,0 +1,51 @@
+﻿@using MaerskLine.CMS.Models.Entities
+@model IList<Order>
+
+@{
+    ViewBag.Title = "My Order History";
+}
+
+<link type="text/css" rel="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" />
+
+<div class="container">
+    <h3>My Order Histories</h3>
+    @if (Model != null && Model.Count() > 0)
+    {
+        <table id="tblOrders" class="table table-striped table-bordered" style="width:100%">
+            <thead>
+                <tr>
+                    <th>Item Name</th>
+                    <th>Item Weight</th>
+                    <th>Status</th>
+                    <th>Pickup Date</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.ItemName</td>
+                        <td>@item.ItemWeight</td>
+                        <td>@item.Status</td>
+                        <td>@item.PickupDate</td>
+                        <td><a role="button" href="@Url.Action("View", "Order", new { orderId = item.Id })">View</a></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <div class="text-center">No history available</div>
+    }
+</div>
+
+@section Scripts{
+    <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#tblOrders').DataTable();
+        });
+    </script>
+}

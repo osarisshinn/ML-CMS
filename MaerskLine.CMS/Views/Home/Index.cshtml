@@ -1,0 +1,100 @@
+﻿@using MaerskLine.CMS.Models.Entities
+@model IEnumerable<Notification>
+
+@{
+    ViewBag.Title = "Home Page";
+}
+
+@if (!User.Identity.IsAuthenticated)
+{
+    <div id="myCarousel" class="carousel slide" data-interval="false">
+        <!-- Indicators -->
+        <ol class="carousel-indicators">
+            <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+            <li data-target="#myCarousel" data-slide-to="1"></li>
+        </ol>
+        <div class="carousel-inner">
+            <div class="item active">
+                <img src="https://media.istockphoto.com/photos/stack-of-containers-in-the-harbor-of-antwerpe-belgium-picture-id623527658?k=6&m=623527658&s=612x612&w=0&h=1vXJpZG1anVlPxbS7cQNYNwCZlk6DjmSVBJWElIiayo=" style="width:100%" class="img-responsive">
+                <div class="container">
+                    <div class="carousel-caption">
+                        <h1>Only cost USD $1000/Container</h1>
+                        <p></p>
+                        <p>
+                            <a class="btn btn-lg btn-primary" href="http://getbootstrap.com">Learn More</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="item">
+                <img src="https://www.odysseylogistics.com/wp-content/uploads/2013/06/plane-and-ship-2000x600.jpg" class="img-responsive">
+                <div class="container">
+                    <div class="carousel-caption">
+                        <h1>Don't wait!!</h1>
+                        <p>Start transporting your goods with us</p>
+                        <p><a class="btn btn-large btn-primary" href="@Url.Action("Register", "Account")">Register</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Controls -->
+        <a class="left carousel-control" href="#myCarousel" data-slide="prev">
+            <span class="icon-prev"></span>
+        </a>
+        <a class="right carousel-control" href="#myCarousel" data-slide="next">
+            <span class="icon-next"></span>
+        </a>
+    </div>
+}
+else
+{
+    <div class="container">
+        <div class="row">
+            <section class="content">
+                <h1>Notifications</h1>
+                <div class="col-md-8 col-md-offset-2">
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <div class="pull-right">
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-default btn-filter" data-target="all">Todos</button>
+                                </div>
+                            </div>
+                            <div class="table-container">
+                                <table class="table table-filter">
+                                    <tbody>
+                                        @if (Model != null && Model.Count() > 0)
+                                        {
+                                            foreach (var item in Model)
+                                            {
+                                                <tr>
+                                                    <td>
+                                                        <div class="media">
+                                                            <div class="media-body">
+                                                                <span class="media-meta pull-right">@item.DateTime</span>
+                                                                <h4 class="title">
+                                                                    @item.Order.OrderTrackingId
+                                                                </h4>
+                                                                <p class="summary">@item.Message</p>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            }
+                                        }
+                                        else
+                                        {
+                                            <tr>
+                                                <td class="text-center">No notification</td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+}
